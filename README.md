@@ -28,5 +28,4 @@ Sometimes this will reduce overhead dramatically.
 
    * C++ 17.   
    * Header only.   
-   * Support Custom Allocator
 
