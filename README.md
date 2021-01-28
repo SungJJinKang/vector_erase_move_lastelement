@@ -1,11 +1,24 @@
 # vector::erase_move_lastelement
 
-If you are using vector, Maybe you had experience deleting element of vector.   
-This vector::erase delete specific element and reallocate elements after deleted element.   
-But This reallocation is sometimes too slow. (when element's move semantic is defined not well).   
+## Feature   
+   * C++ 17.   
+   * Header only.   
 
-So my vector::erase_move_lastelement function just delete target element and reallocate(move) only vector's last element to deleted element's pos.   
-Sometimes this will reduce overhead dramatically.   
+## How work   
+
+If you are using vector, Maybe you had experience to need deleting specific element of vector.   
+if the element isn't last element of vector, you should use vector::erase function.   
+This vector::erase delete specific element and need to reallocate(move) elements after deleted element.   
+But This reallocation is usally too slow.   
+Think if your vector has 100 element and you erase first element of the vector, your vector will reallocate 99 element.   
+if vector's element has not well defined move semantic, this reallocation will be really really slow.   
+
+So **my erase_move_lastelement function swap erased element with last element and pop last element.***      
+This way require just only three reallocation. ( think how swap works )   
+erase_move_lastelement function will reduce overhead dramatically.   
+The more your vector's element count is, the faster this function than std::erase. 
+
+
 
 ## This is how vector::erase works.
 
@@ -13,20 +26,56 @@ Sometimes this will reduce overhead dramatically.
 
 1  X  3  4  5 ( X is deleted element )   
 
-1  **3  4  5** ( element '3', '4', '5' is reallocated, this is sometimes too expensive )   
+1  **3  4  5** ( **element '3', '4', '5' is reallocated, this is sometimes too expensive** )   
 
 ## How my library's vector::erase_move_lastelement works
 
-1  2  3  4  5   
+1  **2**  3  4  5   
 
-1  X  3  4  5 ( X is deleted element )   
+1  5  3  4  **2** ( swap erased element ( 2 ) with last element )   
 
-1  **5**  3  4  ( only element '5' is reallocated )   
+1  5  3  4  ( pop last element )   
 
 
-## Feature
+## Result
 
-   * C++ 17.   
-   * Header only.   
-   * Support Custom Allocator
+std::vector_erase_move_lastelement : 13 ms.   
+std::vector::erase : 163 ms.   
+
+```c++
+class A
+{
+public:
+	int a = 10;
+	double b = 10.0;
+	std::string str1{ "Hello" };
+	std::string str2{ "Male" };
+	std::string str3{ "Female" };
+};
+int main()
+{
+	std::vector<A> A1{};
+	std::vector<A> A2{};
+	A1.reserve(100);
+	A2.reserve(100);
+	for (int i = 0; i < 1000; i++)
+	{
+		A1.emplace_back();
+		A2.emplace_back();
+	}
+	
+	{
+		auto now = std::chrono::high_resolution_clock::now();
+		A1.erase(A1.begin() + 2);
+		std::cout << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - now).count() << std::endl;
+	}
+	
+	{
+		auto now = std::chrono::high_resolution_clock::now();
+		std::vector_erase_move_lastelement(A2, 2);
+		std::cout << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - now).count() << std::endl;
+	}
+}
+```
+
 

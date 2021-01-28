@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <vector>
-#include <utility>
+#include <algorithm>
 
 namespace std
 {
@@ -40,7 +40,7 @@ namespace std
 
 		if (erasedElementIndex != size - 1)
 		{// if i isn't last element
-			std::swap(vector[erasedElementIndex], vector.back());
+			std::iter_swap(vector.begin() + erasedElementIndex, vector.end() - 1);
 		}
 
 		vector.pop_back();
