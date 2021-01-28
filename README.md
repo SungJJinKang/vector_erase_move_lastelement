@@ -13,7 +13,7 @@ Sometimes this will reduce overhead dramatically.
 
 1  X  3  4  5 ( X is deleted element )   
 
-1  **3  4  5** ( element '3', '4', '5' is reallocated, this is sometimes too expensive )   
+1  **3  4  5** ( **element '3', '4', '5' is reallocated**, this is sometimes too expensive )   
 
 ## How my library's vector::erase_move_lastelement works
 
@@ -21,7 +21,7 @@ Sometimes this will reduce overhead dramatically.
 
 1  X  3  4  5 ( X is deleted element )   
 
-1  **5**  3  4  ( only element '5' is reallocated )   
+1  **5**  3  4  ( **only element '5' is reallocated** )   
 
 
 ## Feature
