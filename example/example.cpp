@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "../vector_erase_move_lastelement.h"
+#include "../vector_swap_erase.h"
 
 class A
 {
@@ -53,8 +53,8 @@ int main()
 	}
 	std::cout << std::endl;
 
-	std::vector_erase_move_lastelement(a, 0);
-	std::vector_erase_move_lastelement(b, 1);
+	std::vector_swap_erase(a, 0);
+	std::vector_swap_erase(b, 1);
 
 	std::cout << std::endl;
 	for (auto& aa : a)

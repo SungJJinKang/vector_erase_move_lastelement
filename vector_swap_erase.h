@@ -16,7 +16,7 @@ namespace std
 	/// 
 	/// 	1 * *3  4  5 * *(element '3', '4', '5' is reallocated, this is sometimes too expensive)
 	/// 
-	///  How my library's vector::erase_move_lastelement works
+	///  How my library's vector_swap_erase works
 	/// 
 	/// 	1  2  3  4  5
 	/// 
@@ -33,7 +33,7 @@ namespace std
 	/// <param name="erasedElementIndex">index of erased element ( 0 ~ vector size )</param>
 	/// <returns>iterator at replaced element's pos</returns>
 	template <typename T, typename Allocator>
-	typename std::vector<T>::iterator vector_erase_move_lastelement(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::size_type erasedElementIndex)
+	typename std::vector<T>::iterator vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::size_type erasedElementIndex)
 	{
 		size_t size = vector.size();
 		assert(erasedElementIndex >= 0 && erasedElementIndex < size); // out of range

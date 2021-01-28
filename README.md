@@ -1,4 +1,4 @@
-# vector::erase_move_lastelement
+# vector_swap_erase
 
 ## Feature   
    * C++ 17.   
@@ -13,10 +13,10 @@ But This reallocation is usally too slow.
 Think if your vector has 100 element and you erase first element of the vector, your vector will reallocate 99 element.   
 if vector's element has not well defined move semantic, this reallocation will be really really slow.   
 
-So **my erase_move_lastelement function swap erased element with last element and pop last element.***      
+So **my vector_swap_erase function swap erased element with last element and pop last element.***      
 This way require just only three reallocation. ( think how swap works )   
-erase_move_lastelement function will reduce overhead dramatically.   
-The more your vector's element count is, the faster this function than std::erase. 
+vector_swap_erase function will reduce overhead dramatically.   
+The more your vector's element count is, the faster this function than vector::erase. 
 
 
 
@@ -28,7 +28,7 @@ The more your vector's element count is, the faster this function than std::eras
 
 1  **3  4  5** ( **element '3', '4', '5' is reallocated, this is sometimes too expensive** )   
 
-## How my library's vector::erase_move_lastelement works
+## How my library's vector_swap_erase works
 
 1  **2**  3  4  5   
 
@@ -39,7 +39,7 @@ The more your vector's element count is, the faster this function than std::eras
 
 ## Result
 
-std::vector_erase_move_lastelement : 13 ms.   
+std::vector_swap_erase : 13 ms.   
 std::vector::erase : 163 ms.   
 
 ```c++
@@ -72,7 +72,7 @@ int main()
 	
 	{
 		auto now = std::chrono::high_resolution_clock::now();
-		std::vector_erase_move_lastelement(A2, 2);
+		std::vector_swap_erase(A2, 2);
 		std::cout << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - now).count() << std::endl;
 	}
 }
