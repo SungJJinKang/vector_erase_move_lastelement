@@ -1,4 +1,4 @@
-# Fast vector::erase
+# vector::erase_move_lastelement
 
 If you are using vector, Maybe you had experience deleting element of vector.   
 This vector::erase delete specific element and reallocate elements after deleted element.   
