@@ -18,7 +18,7 @@ This way require just only three reallocation. ( think how swap works )
 vector_swap_erase function will reduce overhead dramatically.   
 The more your vector's element count is, the faster this function than vector::erase. 
 
-
+WARNINGS : If vector's element placement order is important, don't use this function.
 
 ## This is how vector::erase works.
 
