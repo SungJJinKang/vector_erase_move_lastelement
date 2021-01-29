@@ -30,9 +30,9 @@ The more your vector's element count is, the faster this function than vector::e
 
 ## How my library's vector_swap_erase works
 
-1  **2**  3  4  5   
+1  **2**  3  4  **5**   
 
-1  5  3  4  **2** ( swap erased element ( 2 ) with last element )   
+1  **5**  3  4  **2** ( swap erased element ( 2 ) with last element )   
 
 1  5  3  4  ( pop last element )   
 
