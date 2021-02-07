@@ -33,9 +33,11 @@ namespace std
 	/// <param name="erasedElementIndex">index of erased element ( 0 ~ vector size )</param>
 	/// <returns>iterator at replaced element's pos</returns>
 	template <typename T, typename Allocator>
-	typename std::vector<T>::iterator vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::size_type erasedElementIndex)
+	typename void vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::size_type erasedElementIndex)
 	{
 		size_t size = vector.size();
+
+		assert(size != 0);
 		assert(erasedElementIndex >= 0 && erasedElementIndex < size); // out of range
 
 		if (erasedElementIndex != size - 1)
@@ -44,6 +46,21 @@ namespace std
 		}
 
 		vector.pop_back();
-		return vector.begin() + erasedElementIndex; //fast because vector is internally just array, so this is just adding array offset to pointer
+		return; //fast because vector is internally just array, so this is just adding array offset to pointer
+	}
+
+	template <typename T, typename Allocator>
+	typename void vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::iterator erasedElementIterator)
+	{
+		assert(vector.size() != 0);
+		assert(vector.end() != erasedElementIterator); // erasedElementIterator should be valid iterator
+
+		if (vector.end() - 1 != erasedElementIterator)
+		{// if i isn't last element
+			std::iter_swap(erasedElementIterator, vector.end() - 1);
+		}
+
+		vector.pop_back();
+		return; //fast because vector is internally just array, so this is just adding array offset to pointer
 	}
 }
