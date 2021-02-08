@@ -37,8 +37,8 @@ namespace std
 	{
 		size_t size = vector.size();
 
-		assert(size != 0);
-		assert(erasedElementIndex >= 0 && erasedElementIndex < size); // out of range
+		if (size == 0 || erasedElementIndex < 0 || erasedElementIndex >= size)
+			return;
 
 		if (erasedElementIndex != size - 1)
 		{// if i isn't last element
@@ -52,10 +52,14 @@ namespace std
 	template <typename T, typename Allocator>
 	typename void vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::iterator erasedElementIterator)
 	{
-		assert(vector.size() != 0);
-		assert(vector.end() != erasedElementIterator); // erasedElementIterator should be valid iterator
+		if (vector.size() == 0)
+			return;
 
-		if (vector.end() - 1 != erasedElementIterator)
+		auto endIterator = vector.end();
+		if (erasedElementIterator == endIterator)
+			return; // if erasedElementIterator is endIterator
+
+		if (endIterator - 1 != erasedElementIterator)
 		{// if i isn't last element
 			std::iter_swap(erasedElementIterator, vector.end() - 1);
 		}
