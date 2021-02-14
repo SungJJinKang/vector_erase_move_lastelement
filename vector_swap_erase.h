@@ -31,14 +31,14 @@ namespace std
 	/// <typeparam name="T"></typeparam>
 	/// <param name="vector"></param>
 	/// <param name="erasedElementIndex">index of erased element ( 0 ~ vector size )</param>
-	/// <returns>iterator at replaced element's pos</returns>
+	/// <returns>iterator at replaced element's new iterator, check with vector::end()</returns>
 	template <typename T, typename Allocator>
-	typename void vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::size_type erasedElementIndex)
+	typename std::vector<T, Allocator>::iterator vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::size_type erasedElementIndex)
 	{
 		size_t size = vector.size();
 
 		if (size == 0 || erasedElementIndex < 0 || erasedElementIndex >= size)
-			return;
+			return vector.end();
 
 		if (erasedElementIndex != size - 1)
 		{// if i isn't last element
@@ -46,18 +46,26 @@ namespace std
 		}
 
 		vector.pop_back();
-		return; //fast because vector is internally just array, so this is just adding array offset to pointer
+		return vector.begin() + erasedElementIndex; //fast because vector is internally just array, so this is just adding array offset to pointer
 	}
 
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="Allocator"></typeparam>
+	/// <param name="vector"></param>
+	/// <param name="erasedElementIterator"></param>
+	/// <returns>iterator at replaced element's new iterator, check with vector::end()</returns>
 	template <typename T, typename Allocator>
-	typename void vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::iterator erasedElementIterator)
+	typename std::vector<T, Allocator>::iterator vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::iterator erasedElementIterator)
 	{
-		if (vector.size() == 0)
-			return;
+		if (vector.size() == 0) 
+			return vector.end();
 
 		auto endIterator = vector.end();
 		if (erasedElementIterator == endIterator)
-			return; // if erasedElementIterator is endIterator
+			return vector.end(); // if erasedElementIterator is endIterator
 
 		if (endIterator - 1 != erasedElementIterator)
 		{// if i isn't last element
@@ -65,6 +73,6 @@ namespace std
 		}
 
 		vector.pop_back();
-		return; //fast because vector is internally just array, so this is just adding array offset to pointer
+		return erasedElementIterator; //fast because vector is internally just array, so this is just adding array offset to pointer
 	}
 }
