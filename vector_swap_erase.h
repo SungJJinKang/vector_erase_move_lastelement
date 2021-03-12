@@ -74,4 +74,24 @@ namespace std
 		vector.pop_back();
 		return erasedElementIterator; //fast because vector is internally just array, so this is just adding array offset to pointer
 	}
+
+	template <typename T, typename Allocator>
+	typename std::vector<T, Allocator>::iterator vector_find_swap_erase(std::vector<T, Allocator>& vector, const T& target)
+	{
+		if (vector.size() == 0)
+		{
+			return vector.end();
+		}
+			
+		for (size_t i = 0 ; i < vector.size() ; i++)
+		{
+			if (vector[i] == target)
+			{
+				return vector_swap_erase(vector, i);
+			}
+		}
+
+		return vector.end();
+	}
+
 }
