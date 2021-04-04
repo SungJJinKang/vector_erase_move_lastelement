@@ -1,4 +1,4 @@
-# vector_swap_erase
+# vector_swap_popback
 
 ## Feature   
    * C++ 17.   
@@ -13,7 +13,7 @@ But This reallocation is usally too slow.
 Think if your vector has 100 element and you erase first element of the vector, your vector will reallocate 99 element.   
 if vector's element has not well defined move semantic, this reallocation will be really really slow.   
 
-So **my vector_swap_erase function swap erased element with last element and pop last element.***      
+So **my vector_swap_popback function swap erased element with last element and pop last element.***      
 This way require just only three reallocation. ( think how swap works )   
 vector_swap_erase function will reduce overhead dramatically.   
 The more your vector's element count is, the faster this function than vector::erase. 
@@ -39,7 +39,7 @@ WARNINGS : If vector's element placement order is important, don't use this func
 
 ## Result
 
-std::vector_swap_erase : 13 ms.   
+std::vector_swap_popback : 13 ms.   
 std::vector::erase : 163 ms.   
 
 ```c++
@@ -72,7 +72,7 @@ int main()
 	
 	{
 		auto now = std::chrono::high_resolution_clock::now();
-		std::vector_swap_erase(A2, 2);
+		std::vector_swap_popback(A2, 2);
 		std::cout << std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now() - now).count() << std::endl;
 	}
 }
