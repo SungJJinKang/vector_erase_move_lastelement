@@ -15,7 +15,7 @@ namespace std
 	/// 
 	/// 	1 * *3  4  5 * *(element '3', '4', '5' is reallocated, this is sometimes too expensive)
 	/// 
-	///  How my library's vector_swap_erase works
+	///  How my library's vector_swap_popback works
 	/// 
 	/// 	1  2  3  4  5
 	/// 
@@ -32,7 +32,7 @@ namespace std
 	/// <param name="erasedElementIndex">index of erased element ( 0 ~ vector size )</param>
 	/// <returns>iterator at replaced element's new iterator, check with vector::end()</returns>
 	template <typename T, typename Allocator>
-	typename std::vector<T, Allocator>::iterator vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::size_type erasedElementIndex)
+	typename std::vector<T, Allocator>::iterator vector_swap_popback(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::size_type erasedElementIndex)
 	{
 		size_t size = vector.size();
 
@@ -57,7 +57,7 @@ namespace std
 	/// <param name="erasedElementIterator"></param>
 	/// <returns>iterator at replaced element's new iterator, check with vector::end()</returns>
 	template <typename T, typename Allocator>
-	typename std::vector<T, Allocator>::iterator vector_swap_erase(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::iterator erasedElementIterator)
+	typename std::vector<T, Allocator>::iterator vector_swap_popback(std::vector<T, Allocator>& vector, typename std::vector<T, Allocator>::iterator erasedElementIterator)
 	{
 		if (vector.size() == 0) 
 			return vector.end();
@@ -76,7 +76,7 @@ namespace std
 	}
 
 	template <typename T, typename Allocator>
-	typename std::vector<T, Allocator>::iterator vector_find_swap_erase(std::vector<T, Allocator>& vector, const T& target)
+	typename std::vector<T, Allocator>::iterator vector_find_swap_popback(std::vector<T, Allocator>& vector, const T& target)
 	{
 		if (vector.size() == 0)
 		{
@@ -87,7 +87,7 @@ namespace std
 		{
 			if (vector[i] == target)
 			{
-				return vector_swap_erase(vector, i);
+				return vector_swap_popback(vector, i);
 			}
 		}
 
